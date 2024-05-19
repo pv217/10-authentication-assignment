@@ -35,38 +35,38 @@ Mutual TLS authentication is a type of authentication that uses client certifica
 
 #### Single sign-on (SSO)
 
-Single sign-on (SSO) is a type of authentication that allows users to log in once and access multiple systems without re-authenticating. The client sends HTTP requests with the Authorization header that contains the word Bearer followed by a space and a token. The server uses the token to authenticate the user against the identity provider.
+Single sign-on (SSO) is a type of authentication that allows users to log in once and access multiple systems without re-authenticating. The client sends HTTP requests with the Authorization header that contains a token. The server uses the token to authenticate the user against the identity provider.
 
 ### HTTPS
 
 When the application is running in a production environment, it's important to use HTTPS to secure the communication between the client and the server. HTTPS is a secure version of HTTP that uses SSL/TLS to encrypt the data transmitted between the client and the server. It provides a secure channel for the client and the server to communicate over the internet. **Always use HTTPS in a production environment.** However, we can use HTTP in our development environment.
 
-### Examples for Basic authentication
+### Examples for authentication
 
 ```java
 @Path("/api/public")
 public class PublicResource {
 
-    @GET
-    @PermitAll // allow all access
-    @Produces(MediaType.TEXT_PLAIN)
-    public String publicResource() {
-        return "public";
-   }
-   
-    @GET
-    @RolesAllowed("user") // allow only users with role "user" to access this resource
-    @Path("/me")
-    public String me(@Context SecurityContext securityContext) { // inject the security context
-      return securityContext.getUserPrincipal().getName();
-    }
+  @GET
+  @PermitAll // allow all access
+  @Produces(MediaType.TEXT_PLAIN)
+  public String publicResource() {
+    return "public";
+  }
 
-    @GET
-    @RolesAllowed("admin") // allow only users with role "admin" to access this resource 
-    @Produces(MediaType.TEXT_PLAIN)
-    public String adminResource() {
-      return "admin";
-    }
+  @GET
+  @RolesAllowed("user") // allow only users with role "user" to access this resource
+  @Path("/me")
+  public String me(@Context SecurityContext securityContext) { // inject the security context
+    return securityContext.getUserPrincipal().getName();
+  }
+
+  @GET
+  @RolesAllowed("admin") // allow only users with role "admin" to access this resource 
+  @Produces(MediaType.TEXT_PLAIN)
+  public String adminResource() {
+    return "admin";
+  }
 }
 ```
 
@@ -123,10 +123,12 @@ Go to `BaggageClientCustomHeaders` and add an Authorization header with the user
 1. Finish the tasks
 2. Push the changes to the main branch
 3. GitHub Classroom automatically prepared a feedback pull request for you
-4. Go to the repository on GitHub and find the feedback pull request
-5. Set label to "Submitted"
-6. GitHub Actions will run basic checks for your submission
-7. Teacher will evaluate the submission as well and give you feedback
+4. GitHub Actions will run basic checks for your submission on push
+5. Teacher will evaluate the submission as well and give you feedback
+
+Resubmit the solution if the checks fail:
+1. Make changes
+2. Push again
 
 ## Hints
 
